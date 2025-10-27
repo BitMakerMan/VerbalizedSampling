@@ -56,29 +56,26 @@ python verbalized_sampling.py --check-ollama
 
 ## 🎲 Utilizzo
 
-### Metodo 1: Stile CHATS-lab (Raccomandato)
+### Metodo 1: Ollama Legacy (Raccomandato - ✅ Testato)
 
 ```bash
-# Esempio base con valori CHATS-lab
-python verbalized_sampling.py --question "Suggerisci nomi per un bar" --k 5 --tau 0.12
+# Esempio base - Nomi per bar
+python verbalized_sampling.py --ollama --question "Suggerisci nomi per un bar" --responses 5 --model gemma3:4b --temperature 0.7
 
-# Con modello specifico
-python verbalized_sampling.py \
-  --question "Crea slogan per una startup tech" \
-  --k 7 \
-  --tau 0.10 \
-  --model qwen2.5 \
-  --temperature 0.8
+# Slogan per startup tech
+python verbalized_sampling.py --ollama --question "Crea slogan per una startup tech" --responses 4 --model qwen2.5:latest --temperature 0.8
+
+# Nomi per attività commerciali
+python verbalized_sampling.py --ollama --question "Suggerisci nomi per una gelateria" --responses 6 --model deepseek-r1:latest --temperature 0.8
 ```
 
-### Metodo 2: Ollama Legacy
+### Metodo 2: CHATS-lab Style (Sperimentale)
+
+⚠️ **Nota**: La modalità CHATS-lab può avere problemi di parsing XML con alcuni modelli. Si raccomanda di usare la modalità legacy.
 
 ```bash
-python verbalized_sampling.py --ollama \
-  --question "Suggerisci nomi per un bar" \
-  --responses 5 \
-  --model gemma3:4b \
-  --temperature 0.7
+# Solo per test con parametri ottimizzati
+python verbalized_sampling.py --k 3 --tau 0.30 --temperature 0.9 --question "Suggerisci un nome creativo" --model gemma3:4b
 ```
 
 ## 📋 Opzioni della Linea di Comando
@@ -131,40 +128,76 @@ Please sample at random from the tails of the distribution, such that the probab
 
 ## 🎯 Esempi di Utilizzo
 
-### Esempio 1: Nomi per Attività
+### Esempio 1: Nomi per Bar ✅ (Testato)
 
 ```bash
-python verbalized_sampling.py --k 5 --tau 0.10 --model gemma3:4b --question "Suggerisci nomi per una gelateria"
+python verbalized_sampling.py --ollama --question "Suggerisci nomi per un bar" --responses 5 --model gemma3:4b --temperature 0.7
 ```
 
-**Output tipico:**
+**Output reale:**
 ```
-[CHATS-LAB] VERBALIZED SAMPLING IMPLEMENTATION
-k=5, tau=0.10, temperature=0.8
-Domanda: Suggerisci nomi per una gelateria
-===============================================================================
+================================================================================
+VERBALIZED SAMPLING RESULTS (CHATS-lab style)
+================================================================================
 
-[RESULTS] Generati 5 risposte:
+Trovate 6 risposte:
 ------------------------------------------------------------
-  1. "Gelateria dei Sogni"
-     Probability: 0.200
-  2. "Artigelo"
-     Probability: 0.180
-  3. "DolceVita Gelato"
-     Probability: 0.160
-  4. "Crema & Sogni"
-     Probability: 0.140
-  5. "Gelato d'Autore"
-     Probability: 0.120
+   1. Indigo Lounge - A mysterious and stylish name.
+   Probability: 0.333 (33.3%)
 
-[SAMPLED] Gelateria dei Sogni
-[PROBABILITY] 0.250
+[TARGET] 2. The Copper Kettle - Warm and traditional.
+   Probability: 0.250 (25.0%)
+
+   3. Stone & Barrel - Evokes a rustic and hearty feel.
+   Probability: 0.167 (16.7%)
+
+   4. The Rusty Mug - A classic, inviting name.
+   Probability: 0.125 (12.5%)
+
+   5. The Velvet Note - Implies a sophisticated and musical vibe.
+   Probability: 0.083 (8.3%)
+
+   6. Brew & Bloom - Suggests a relaxed, floral atmosphere.
+   Probability: 0.042 (4.2%)
+
+================================================================================
+SAMPLED RESPONSE:
+================================================================================
+[OK] The Copper Kettle - Warm and traditional.
+[STATS] Probability: 0.250 (25.0%)
 ```
 
-### Esempio 2: Idee Creative
+### Esempio 2: Slogan Startup Tech ✅ (Testato)
 
 ```bash
-python verbalized_sampling.py --k 4 --tau 0.08 --temperature 0.9 --question "Proponi idee innovative per un'app mobile"
+python verbalized_sampling.py --ollama --question "Crea slogan per una startup tech" --responses 4 --model qwen2.5:latest --temperature 0.8
+```
+
+**Output reale:**
+```
+================================================================================
+VERBALIZED SAMPLING RESULTS (CHATS-lab style)
+================================================================================
+
+Trovate 4 risposte:
+------------------------------------------------------------
+   1. Digitaliza tu vida, transforma tu mundo.
+   Probability: 0.280 (28.0%)
+
+   2. Conectando ideas al vértice del futuro!
+   Probability: 0.260 (26.0%)
+
+   3. Innovando con inteligencia, construyendo el mañana.
+   Probability: 0.240 (24.0%)
+
+[TARGET] 4. Code your reality, shape tomorrow today.
+   Probability: 0.220 (22.0%)
+
+================================================================================
+SAMPLED RESPONSE:
+================================================================================
+[OK] Code your reality, shape tomorrow today.
+[STATS] Probability: 0.220 (22.0%)
 ```
 
 ## 🤖 Supporto Modelli Ollama
@@ -267,8 +300,8 @@ responses, sampled = sampler.process_ollama_input(
 
 **1. "Nessuna risposta valida trovata"**
 - Aumenta la temperatura (0.9+)
-- Riduci tau per includere più risposte valide
-- Prova un modello diverso
+- **Aumenta tau** (es. 0.25) per includere più risposte valide
+- Prova un modello diverso (gemma3:4b, qwen2.5, deepseek-r1)
 
 **2. Ollama non raggiungibile**
 ```bash
@@ -365,8 +398,8 @@ Per supporto e domande:
 ## 🚀 Inizia Subito!
 
 ```bash
-# Esempio rapido
-python verbalized_sampling.py --k 5 --tau 0.12 --question "Cosa ti rende unico?"
+# Esempio rapido garantito che funziona! ✅
+python verbalized_sampling.py --ollama --question "Suggerisci nomi per un bar" --responses 5 --model gemma3:4b --temperature 0.7
 ```
 
 **Divertiti a esplorare la diversità dei modelli linguistici con Verbalized Sampling!** 🎲
