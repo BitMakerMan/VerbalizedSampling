@@ -1,0 +1,27 @@
+# Verbalized Sampling v1.0 - Requirements
+# ===========================================
+# Implementazione Python della tecnica "Verbalized Sampling"
+
+# LIBRERIA PRINCIPALE
+ollama>=0.6.0          # Libreria ufficiale Ollama (raccomandata per performance ottimali)
+
+# DIPENDENZE ESSENZIALI
+requests>=2.32.0       # Per chiamate HTTP all'API Ollama (fallback automatico)
+urllib3>=2.5.0        # Per gestione connessioni HTTPS
+
+# NOTE TECNICHE
+# ===========
+# 1. Il sistema supporta automaticamente:
+#    - Libreria Ollama ufficiale (prioritaria)
+#    - Chiamate HTTP dirette (fallback)
+#    - Modalità manuale (senza dipendenze)
+#
+# 2. Compatibilità: Python 3.8+ (testato su 3.13)
+# 3. Piattaforme: Windows, Linux, macOS
+#
+# INSTALLAZIONE
+# ============
+# pip install -r requirements.txt
+#
+# Per installazione manuale prioritaria:
+# pip install ollama requests urllib3
