@@ -6,7 +6,7 @@
 
 > **Implementazione Python fedele della tecnica "Verbalized Sampling" per massimizzare la diversità dei modelli linguistici.**
 
-Basata sull'implementazione originale di [CHATS-lab](https://github.com/CHATS-lab/verbalized-sampling) con supporto Ollama nativo.
+Sviluppata da **Craicek** per verificare e comprendere a fondo la tecnica Verbalized Sampling, basandosi fedelmente sull'implementazione originale di [CHATS-lab](https://github.com/CHATS-lab/verbalized-sampling) con supporto Ollama nativo.
 
 ## 🎯 Cos'è il Verbalized Sampling?
 
@@ -339,7 +339,8 @@ pip install -r requirements.txt
 
 ### Crediti e Licenza
 
-**Implementazione:** Basata fedelmente su CHATS-lab
+**Sviluppatore:** Craicek - implementazione per verifica e comprensione della tecnica
+**Implementazione Originale:** Basata fedelmente su CHATS-lab
 **Repository Originale:** https://github.com/CHATS-lab/verbalized-sampling
 **Paper Originale:** "Verbalized Sampling: How to Mitigate Mode Collapse and Unlock LLM Diversity"
 **Licenza:** Apache License 2.0
